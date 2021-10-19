@@ -13,6 +13,20 @@ CCEffect %{
       properties:
         texture: { value: white }
         alphaThreshold: { value: 0.5 }
+        center: { 
+          value: [ 0.5, 0.5 ], 
+          editor: { 
+            tooltip: "中心位置"
+          } 
+        }
+        radius: { 
+          value: 0.5, 
+          editor: { 
+            tooltip: "半径大小",
+            range: [0,0.5]
+          } 
+        }
+
 }%
 
 
@@ -62,23 +76,28 @@ CCProgram fs %{
   #if USE_TEXTURE
   in vec2 v_uv0;
   uniform sampler2D texture;
+  uniform img {
+    vec2 center;
+    float radius;
+  };
   #endif
 
   void main () {
+    // 先设置一个全为1的颜色，方便以此为基准进行运算
     vec4 o = vec4(1, 1, 1, 1);
-
     #if USE_TEXTURE
+      // 让图片的颜色渲染上去
       CCTexture(texture, v_uv0, o);
+      // 对中心点做距离计算
+      float mul = distance(v_uv0,center);
+      // 距离大于0.5的，做柔化0.5-0.005的，透明度就为0了
+      mul = smoothstep(radius,radius-0.005,mul);
+      // 对颜色进行运算
+      o *= mul;
     #endif
-
+    //颜色赋值，运算
     o *= v_color;
-
     ALPHA_TEST(o);
-
-    #if USE_BGRA
-      gl_FragColor = o.bgra;
-    #else
-      gl_FragColor = o.rgba;
-    #endif
+    gl_FragColor = o;
   }
 }%
