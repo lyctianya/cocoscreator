@@ -1,0 +1,25 @@
+{
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+    "env": {
+        "browser": true,
+        "mocha": true,
+        "es6": true
+    },
+    "globals": {
+        "cc": true,
+        "Editor": true,
+        "sp": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "plugins": ["@typescript-eslint/eslint-plugin"],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-empty-function": 0,
+        "@typescript-eslint/no-empty-function": 0,
+        "curly": "error",
+        "no-unused-vars": "warn"
+    }
+}

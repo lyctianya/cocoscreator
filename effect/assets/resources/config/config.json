@@ -1,0 +1,10 @@
+[
+    {
+        "name": "圆形头像",
+        "prefab": "prefabs/circle_head"
+    },
+    {
+        "name": "边框",
+        "prefab": "prefabs/border"
+    }
+]
