@@ -90,6 +90,8 @@ CCProgram fs %{
       CCTexture(texture, v_uv0, o);
       // 对中心点做距离计算
       float mul = distance(v_uv0,center);
+      // 默认 做距离的运算，可自己操作矩阵变化
+      // float mul = distance(vec2(v_uv0.x,v_uv0.y*2-0.5),vec2(0.5,0.5));
       // 距离大于0.5的，做柔化0.5-0.005的，透明度就为0了
       mul = smoothstep(radius,radius-0.005,mul);
       // 对颜色进行运算
